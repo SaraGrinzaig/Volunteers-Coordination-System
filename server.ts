@@ -1,21 +1,42 @@
+// import express from 'express';
+// import connectDB from './utils/db-connect';
+// // import helpRequestRoutes from './help requests/help-requests-api';
+// // import volunteerRoutes from './volunteers/volunteers-api';
+
+// const app = express();
+// const PORT = process.env.PORT || 5000;
+
+// // חיבור ל-MongoDB
+// connectDB();
+
+// // Middlewares
+// app.use(express.json());
+
+// // Routes
+// // app.use('/api', helpRequestRoutes);
+// // app.use('/api', volunteerRoutes);
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
+
+
 import express from 'express';
 import connectDB from './utils/db-connect';
-// import helpRequestRoutes from './help requests/help-requests-api';
-// import volunteerRoutes from './volunteers/volunteers-api';
+import helpRequestsApi from './help requests/help-requests-api';
+import volunteersApi from './volunteers/volunteers-api';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// חיבור ל-MongoDB
 connectDB();
 
-// Middlewares
 app.use(express.json());
 
-// Routes
-// app.use('/api', helpRequestRoutes);
-// app.use('/api', volunteerRoutes);
+app.use('/api/help-requests', helpRequestsApi);
+app.use('/api/volunteers', volunteersApi);
+
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

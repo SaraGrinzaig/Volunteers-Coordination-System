@@ -5,8 +5,11 @@ const connectDB = async () => {
     await mongoose.connect('mongodb+srv://VolunteerCoordination:SariG@cluster0.mongodb.net/myDatabaseName?retryWrites=true&w=majority');
     console.log('MongoDB connected');
   } catch (error) {
-    console.error('MongoDB connection failed:', error.message);
-    process.exit(1);
+    if (error instanceof Error) {
+      console.error('MongoDB connection failed:', error.message);
+    } else {
+      console.error('MongoDB connection failed:', error);
+    }
   }
 };
 
