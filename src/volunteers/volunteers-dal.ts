@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
 
 const volunteerSchema = new mongoose.Schema({
+  _id: String,
   firstName: String,
   lastName: String,
   phone: String,
+  email: String,
   internships: [String],
 });
 
