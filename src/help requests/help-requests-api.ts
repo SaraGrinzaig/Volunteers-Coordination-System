@@ -1,5 +1,6 @@
 import express from 'express';
-import { getHelpRequests, getHelpRequestById, createHelpRequest, updateHelpRequest, deleteHelpRequest } from './help-reqest-service';
+import { getHelpRequests, getHelpRequestById, createHelpRequest, updateHelpRequest, deleteHelpRequest } from './help-request-service';
+import { isNotNullMW, isNumberMW } from '../middlewares';
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', isNumberMW, async (req, res) => {
   try {
     const { id } = req.params;
     const helpRequest = await getHelpRequestById(id);
@@ -26,7 +27,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', isNotNullMW, async (req, res) => {
   try {
     const data = req.body;
     const newHelpRequest = await createHelpRequest(data);
@@ -36,7 +37,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id',isNumberMW, isNotNullMW, async (req, res) => {
   try {
     const { id } = req.params;
     const update = req.body;
@@ -50,7 +51,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isNumberMW, async (req, res) => {
   try {
     const { id } = req.params;
     await deleteHelpRequest(id);

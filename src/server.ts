@@ -2,6 +2,7 @@ import express from 'express';
 import connectDB from './utils/db-connect';
 import helpRequestsApi from './help requests/help-requests-api';
 import volunteersApi from './volunteers/volunteers-api';
+import { logRequest } from './middlewares';
 
 const app = express();
 
@@ -9,6 +10,7 @@ connectDB();
 
 app.use(express.json());
 
+app.use(logRequest);
 app.use('/api/help-requests', helpRequestsApi);
 app.use('/api/volunteers', volunteersApi);
 

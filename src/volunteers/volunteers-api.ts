@@ -1,5 +1,6 @@
 import express from 'express';
 import { createVolunteer, deleteVolunteer, findVolunteerById, getVolunteers, updateVolunteer } from './volunteers-sevice';
+import { isNotNullMW, isNumberMW } from '../middlewares';
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', isNumberMW, async (req, res) => {
   try {
     const { id } = req.params;
     const volunteer = await findVolunteerById(id);
@@ -26,7 +27,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', isNotNullMW, async (req, res) => {
   try {
     const volunteerData = req.body;
     const newVolunteer = await createVolunteer(volunteerData);
@@ -36,7 +37,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', isNumberMW, isNotNullMW, async (req, res) => {
   try {
     const { id } = req.params;
     const updateData = req.body;
@@ -50,7 +51,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isNumberMW, async (req, res) => {
   try {
     const { id } = req.params;
     await deleteVolunteer(id);
